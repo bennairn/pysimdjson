@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drop-in API &#8212; simdjson  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Native API" href="native.html" />
+    <link rel="prev" title="pysimdjson" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-simdjson">
+<span id="drop-in-api"></span><h1>Drop-in API<a class="headerlink" href="#module-simdjson" title="Permalink to this headline">¶</a></h1>
+<p>These methods are provided as drop-in replacements to the built-in JSON module.
+They sacrifice some of the speed provided by the <a class="reference internal" href="native.html#simdjson.Parser" title="simdjson.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parser</span></code></a> interface in
+exchange for “just working”.</p>
+<dl class="py function">
+<dt id="simdjson.load">
+<code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fp</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">cls</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">object_hook</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parse_float</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parse_int</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parse_constant</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">object_pairs_hook</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simdjson.html#load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simdjson.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as the built-in json.load(), with the following exceptions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>All parse_* arguments are currently ignored. simdjson does not
+currently provide hooks for these, but it is planned.</p></li>
+<li><p>object_pairs_hook is ignored.</p></li>
+<li><p>cls is ignored.</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simdjson.loads">
+<code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">loads</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">cls</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">object_hook</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parse_float</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parse_int</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parse_constant</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">object_pairs_hook</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simdjson.html#loads"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simdjson.loads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as the built-in json.loads(), with the following exceptions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>All parse_* arguments are currently ignored. simdjson does not
+currently provide hooks for these, but it is planned.</p></li>
+<li><p>object_pairs_hook is ignored.</p></li>
+<li><p>cls is ignored.</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The dump and dumps module are currently just aliased to the built-in JSON
+serializer.</p>
+</div>
+<dl class="py function">
+<dt id="simdjson.dump">
+<code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">dump</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em>, <em class="sig-param"><span class="n">fp</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">skipkeys</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">ensure_ascii</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_circular</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">allow_nan</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">cls</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">indent</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">separators</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sort_keys</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/json.html#dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simdjson.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize <code class="docutils literal notranslate"><span class="pre">obj</span></code> as a JSON formatted stream to <code class="docutils literal notranslate"><span class="pre">fp</span></code> (a
+<code class="docutils literal notranslate"><span class="pre">.write()</span></code>-supporting file-like object).</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">skipkeys</span></code> is true then <code class="docutils literal notranslate"><span class="pre">dict</span></code> keys that are not basic types
+(<code class="docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">bool</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>) will be skipped
+instead of raising a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">ensure_ascii</span></code> is false, then the strings written to <code class="docutils literal notranslate"><span class="pre">fp</span></code> can
+contain non-ASCII characters if they appear in strings contained in
+<code class="docutils literal notranslate"><span class="pre">obj</span></code>. Otherwise, all such characters are escaped in JSON strings.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">check_circular</span></code> is false, then the circular reference check
+for container types will be skipped and a circular reference will
+result in an <code class="docutils literal notranslate"><span class="pre">OverflowError</span></code> (or worse).</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">allow_nan</span></code> is false, then it will be a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> to
+serialize out of range <code class="docutils literal notranslate"><span class="pre">float</span></code> values (<code class="docutils literal notranslate"><span class="pre">nan</span></code>, <code class="docutils literal notranslate"><span class="pre">inf</span></code>, <code class="docutils literal notranslate"><span class="pre">-inf</span></code>)
+in strict compliance of the JSON specification, instead of using the
+JavaScript equivalents (<code class="docutils literal notranslate"><span class="pre">NaN</span></code>, <code class="docutils literal notranslate"><span class="pre">Infinity</span></code>, <code class="docutils literal notranslate"><span class="pre">-Infinity</span></code>).</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">indent</span></code> is a non-negative integer, then JSON array elements and
+object members will be pretty-printed with that indent level. An indent
+level of 0 will only insert newlines. <code class="docutils literal notranslate"><span class="pre">None</span></code> is the most compact
+representation.</p>
+<p>If specified, <code class="docutils literal notranslate"><span class="pre">separators</span></code> should be an <code class="docutils literal notranslate"><span class="pre">(item_separator,</span> <span class="pre">key_separator)</span></code>
+tuple.  The default is <code class="docutils literal notranslate"><span class="pre">(',</span> <span class="pre">',</span> <span class="pre">':</span> <span class="pre">')</span></code> if <em>indent</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code> and
+<code class="docutils literal notranslate"><span class="pre">(',',</span> <span class="pre">':</span> <span class="pre">')</span></code> otherwise.  To get the most compact JSON representation,
+you should specify <code class="docutils literal notranslate"><span class="pre">(',',</span> <span class="pre">':')</span></code> to eliminate whitespace.</p>
+<p><code class="docutils literal notranslate"><span class="pre">default(obj)</span></code> is a function that should return a serializable version
+of obj or raise TypeError. The default simply raises TypeError.</p>
+<p>If <em>sort_keys</em> is true (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>), then the output of
+dictionaries will be sorted by key.</p>
+<p>To use a custom <code class="docutils literal notranslate"><span class="pre">JSONEncoder</span></code> subclass (e.g. one that overrides the
+<code class="docutils literal notranslate"><span class="pre">.default()</span></code> method to serialize additional types), specify it with
+the <code class="docutils literal notranslate"><span class="pre">cls</span></code> kwarg; otherwise <code class="docutils literal notranslate"><span class="pre">JSONEncoder</span></code> is used.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simdjson.dumps">
+<code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">dumps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">skipkeys</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">ensure_ascii</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_circular</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">allow_nan</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">cls</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">indent</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">separators</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sort_keys</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/json.html#dumps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simdjson.dumps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize <code class="docutils literal notranslate"><span class="pre">obj</span></code> to a JSON formatted <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">skipkeys</span></code> is true then <code class="docutils literal notranslate"><span class="pre">dict</span></code> keys that are not basic types
+(<code class="docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">bool</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>) will be skipped
+instead of raising a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">ensure_ascii</span></code> is false, then the return value can contain non-ASCII
+characters if they appear in strings contained in <code class="docutils literal notranslate"><span class="pre">obj</span></code>. Otherwise, all
+such characters are escaped in JSON strings.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">check_circular</span></code> is false, then the circular reference check
+for container types will be skipped and a circular reference will
+result in an <code class="docutils literal notranslate"><span class="pre">OverflowError</span></code> (or worse).</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">allow_nan</span></code> is false, then it will be a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> to
+serialize out of range <code class="docutils literal notranslate"><span class="pre">float</span></code> values (<code class="docutils literal notranslate"><span class="pre">nan</span></code>, <code class="docutils literal notranslate"><span class="pre">inf</span></code>, <code class="docutils literal notranslate"><span class="pre">-inf</span></code>) in
+strict compliance of the JSON specification, instead of using the
+JavaScript equivalents (<code class="docutils literal notranslate"><span class="pre">NaN</span></code>, <code class="docutils literal notranslate"><span class="pre">Infinity</span></code>, <code class="docutils literal notranslate"><span class="pre">-Infinity</span></code>).</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">indent</span></code> is a non-negative integer, then JSON array elements and
+object members will be pretty-printed with that indent level. An indent
+level of 0 will only insert newlines. <code class="docutils literal notranslate"><span class="pre">None</span></code> is the most compact
+representation.</p>
+<p>If specified, <code class="docutils literal notranslate"><span class="pre">separators</span></code> should be an <code class="docutils literal notranslate"><span class="pre">(item_separator,</span> <span class="pre">key_separator)</span></code>
+tuple.  The default is <code class="docutils literal notranslate"><span class="pre">(',</span> <span class="pre">',</span> <span class="pre">':</span> <span class="pre">')</span></code> if <em>indent</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code> and
+<code class="docutils literal notranslate"><span class="pre">(',',</span> <span class="pre">':</span> <span class="pre">')</span></code> otherwise.  To get the most compact JSON representation,
+you should specify <code class="docutils literal notranslate"><span class="pre">(',',</span> <span class="pre">':')</span></code> to eliminate whitespace.</p>
+<p><code class="docutils literal notranslate"><span class="pre">default(obj)</span></code> is a function that should return a serializable version
+of obj or raise TypeError. The default simply raises TypeError.</p>
+<p>If <em>sort_keys</em> is true (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>), then the output of
+dictionaries will be sorted by key.</p>
+<p>To use a custom <code class="docutils literal notranslate"><span class="pre">JSONEncoder</span></code> subclass (e.g. one that overrides the
+<code class="docutils literal notranslate"><span class="pre">.default()</span></code> method to serialize additional types), specify it with
+the <code class="docutils literal notranslate"><span class="pre">cls</span></code> kwarg; otherwise <code class="docutils literal notranslate"><span class="pre">JSONEncoder</span></code> is used.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">simdjson</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">pysimdjson</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Drop-in API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="native.html">Native API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">pysimdjson</a></li>
+      <li>Next: <a href="native.html" title="next chapter">Native API</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Tyler Kennedy.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/dropin.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

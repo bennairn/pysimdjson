@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Native API &#8212; simdjson  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Drop-in API" href="dropin.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="native-api">
+<h1>Native API<a class="headerlink" href="#native-api" title="Permalink to this headline">¶</a></h1>
+<p>The native simdjson API offers significant performance improvements over the
+builtin-compatible API if only part of a document is of interest. Objects
+and arrays are returned as fake dicts (<a class="reference internal" href="#simdjson.Object" title="simdjson.Object"><code class="xref py py-class docutils literal notranslate"><span class="pre">Object</span></code></a>) and lists
+(<a class="reference internal" href="#simdjson.Array" title="simdjson.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a>) that delay the creation of Python objects until they are
+accessed.</p>
+<dl class="py class">
+<dt id="simdjson.Parser">
+<em class="property">class </em><code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">Parser</code><a class="headerlink" href="#simdjson.Parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <cite>Parser</cite> instance is used to load a JSON document.</p>
+<p>A Parser can be reused to parse multiple documents, in which
+case it wil reuse its internal buffer, only increasing it if
+needed.
+The <a class="reference internal" href="#simdjson.Object" title="simdjson.Object"><code class="xref py py-class docutils literal notranslate"><span class="pre">Object</span></code></a> and <a class="reference internal" href="#simdjson.Array" title="simdjson.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a> objects returned by
+a Parser are invalidated when a new document is parsed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>max_capacity</strong> – The maximum size the internal buffer can
+grow to. [default: SIMDJSON_MAXSIZE_BYTES]</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="simdjson.Parser.load">
+<code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Parser</span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">recursive</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#simdjson.Parser.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a JSON document from the file system path <cite>path</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – A filesystem path.</p></li>
+<li><p><strong>recursive</strong> – Recursively turn the document into real
+python objects instead of pysimdjson proxies.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simdjson.Parser.parse">
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Parser</span></em>, <em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">recursive</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#simdjson.Parser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a JSON document from the byte string <cite>s</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> – The document to parse.</p></li>
+<li><p><strong>recursive</strong> – Recursively turn the document into real
+python objects instead of pysimdjson proxies.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="simdjson.Array">
+<em class="property">class </em><code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">Array</code><a class="headerlink" href="#simdjson.Array" title="Permalink to this definition">¶</a></dt>
+<dd><p>A proxy object that behaves much like a real <cite>list()</cite>.
+Python objects are not created until an element in the list
+is accessed.</p>
+<p>Supports iteration, indexing, <cite>len()</cite>, and slicing.</p>
+<dl class="py method">
+<dt id="simdjson.Array.as_list">
+<code class="sig-name descname">as_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Array</span></em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#simdjson.Array.as_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert this Array to a regular python list, recursively converting any objects/lists it finds.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="simdjson.Object">
+<em class="property">class </em><code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">Object</code><a class="headerlink" href="#simdjson.Object" title="Permalink to this definition">¶</a></dt>
+<dd><p>A proxy object that behaves much like a real <cite>dict()</cite>.
+Python objects are not created until an element in the Object
+is accessed.</p>
+<p>Supports iteration, indexing, <cite>len()</cite>, and <cite>in</cite>/<cite>not in</cite>.</p>
+<dl class="py method">
+<dt id="simdjson.Object.as_dict">
+<code class="sig-name descname">as_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Object</span></em><span class="sig-paren">)</span> &#x2192; dict<a class="headerlink" href="#simdjson.Object.as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Convert this <cite>Object</cite> to a regular python dictionary,</dt><dd><p>recursively converting any objects or lists it finds.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simdjson.Object.at">
+<code class="sig-name descname">at</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Object</span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#simdjson.Object.at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value associated with the given JSON pointer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simdjson.Object.keys">
+<code class="sig-name descname">keys</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Object</span></em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#simdjson.Object.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all keys in this <cite>Object</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simdjson.Object.values">
+<code class="sig-name descname">values</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Object</span></em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#simdjson.Object.values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all values in this <cite>Object</cite>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="simdjson.SimdjsonError">
+<em class="property">class </em><code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">SimdjsonError</code><a class="headerlink" href="#simdjson.SimdjsonError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all pysimdjson errors.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="simdjson.CapacityError">
+<em class="property">class </em><code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">CapacityError</code><a class="headerlink" href="#simdjson.CapacityError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="simdjson.NoSuchFieldError">
+<em class="property">class </em><code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">NoSuchFieldError</code><a class="headerlink" href="#simdjson.NoSuchFieldError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="simdjson.IndexOutOfBoundsError">
+<em class="property">class </em><code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">IndexOutOfBoundsError</code><a class="headerlink" href="#simdjson.IndexOutOfBoundsError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="simdjson.IncorrectTypeError">
+<em class="property">class </em><code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">IncorrectTypeError</code><a class="headerlink" href="#simdjson.IncorrectTypeError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="simdjson.InvalidJSONPointerError">
+<em class="property">class </em><code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">InvalidJSONPointerError</code><a class="headerlink" href="#simdjson.InvalidJSONPointerError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt id="simdjson.MAXSIZE_BYTES">
+<code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">MAXSIZE_BYTES</code><em class="property">: int</em><em class="property"> = 4294967295</em><a class="headerlink" href="#simdjson.MAXSIZE_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum document size (in bytes) supported by simdjson.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt id="simdjson.PADDING">
+<code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">PADDING</code><em class="property">: int</em><em class="property"> = 32</em><a class="headerlink" href="#simdjson.PADDING" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount of padding needed in a buffer to parse JSON.</p>
+<p>In general, pysimdjson takes care of padding for you and you do not need
+to worry about this.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt id="simdjson.DEFAULT_MAX_DEPTH">
+<code class="sig-prename descclassname">simdjson.</code><code class="sig-name descname">DEFAULT_MAX_DEPTH</code><em class="property">: int</em><em class="property"> = 1024</em><a class="headerlink" href="#simdjson.DEFAULT_MAX_DEPTH" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum number of nested objects and arrays.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">simdjson</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">pysimdjson</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dropin.html">Drop-in API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Native API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="dropin.html" title="previous chapter">Drop-in API</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Tyler Kennedy.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/native.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

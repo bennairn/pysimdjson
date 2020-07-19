@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>simdjson &#8212; simdjson  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for simdjson</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">csimdjson</span> <span class="kn">import</span> <span class="p">(</span>
+        <span class="c1"># Objects</span>
+        <span class="n">Parser</span><span class="p">,</span>
+        <span class="n">Array</span><span class="p">,</span>
+        <span class="n">Object</span><span class="p">,</span>
+        <span class="c1"># Enums</span>
+        <span class="n">error_code</span><span class="p">,</span>
+        <span class="c1"># Constants</span>
+        <span class="n">MAXSIZE_BYTES</span><span class="p">,</span>
+        <span class="n">PADDING</span><span class="p">,</span>
+        <span class="n">DEFAULT_MAX_DEPTH</span><span class="p">,</span>
+        <span class="c1"># Exceptions</span>
+        <span class="n">SimdjsonError</span><span class="p">,</span>
+        <span class="n">CapacityError</span><span class="p">,</span>
+        <span class="n">NoSuchFieldError</span><span class="p">,</span>
+        <span class="n">IndexOutOfBoundsError</span><span class="p">,</span>
+        <span class="n">IncorrectTypeError</span><span class="p">,</span>
+        <span class="n">InvalidJSONPointerError</span>
+    <span class="p">)</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Unable to import low-level simdjson bindings.&#39;</span><span class="p">)</span>
+
+<span class="c1"># Shuts up *all* linters complaining about our unused imports.</span>
+<span class="n">_ALL_IMPORTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Parser</span><span class="p">,</span>
+    <span class="n">Array</span><span class="p">,</span>
+    <span class="n">Object</span><span class="p">,</span>
+    <span class="n">error_code</span><span class="p">,</span>
+    <span class="n">MAXSIZE_BYTES</span><span class="p">,</span>
+    <span class="n">PADDING</span><span class="p">,</span>
+    <span class="n">DEFAULT_MAX_DEPTH</span><span class="p">,</span>
+    <span class="n">SimdjsonError</span><span class="p">,</span>
+    <span class="n">CapacityError</span><span class="p">,</span>
+    <span class="n">NoSuchFieldError</span><span class="p">,</span>
+    <span class="n">IndexOutOfBoundsError</span><span class="p">,</span>
+    <span class="n">IncorrectTypeError</span><span class="p">,</span>
+    <span class="n">InvalidJSONPointerError</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="load"><a class="viewcode-back" href="../dropin.html#simdjson.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">object_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parse_float</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parse_int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+         <span class="n">parse_constant</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Same as the built-in json.load(), with the following exceptions:</span>
+
+<span class="sd">        - All parse_* arguments are currently ignored. simdjson does not</span>
+<span class="sd">          currently provide hooks for these, but it is planned.</span>
+<span class="sd">        - object_pairs_hook is ignored.</span>
+<span class="sd">        - cls is ignored.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="loads"><a class="viewcode-back" href="../dropin.html#simdjson.loads">[docs]</a><span class="k">def</span> <span class="nf">loads</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">object_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parse_float</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parse_int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+          <span class="n">parse_constant</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Same as the built-in json.loads(), with the following exceptions:</span>
+
+<span class="sd">        - All parse_* arguments are currently ignored. simdjson does not</span>
+<span class="sd">          currently provide hooks for these, but it is planned.</span>
+<span class="sd">        - object_pairs_hook is ignored.</span>
+<span class="sd">        - cls is ignored.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
+
+
+<span class="n">dumps</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span>
+<span class="n">dump</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dump</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">simdjson</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">pysimdjson</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dropin.html">Drop-in API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../native.html">Native API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Tyler Kennedy.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

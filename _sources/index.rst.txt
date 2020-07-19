@@ -1,19 +1,18 @@
+.. toctree::
+   :maxdepth: 4
+   :titlesonly:
+   :hidden:
+
+   self
+   dropin
+   native
+
 .. mdinclude:: ../README.md
 
-API Reference
-=============
 
-.. autofunction:: simdjson.loads
+Indices and tables
+==================
 
-ParsedJson
-----------
-
-.. autoclass:: simdjson.ParsedJson
-   :members:
-   :undoc-members:
-
-Iterator
---------
-.. autoclass:: simdjson.Iterator
-   :members:
-   :undoc-members:
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
