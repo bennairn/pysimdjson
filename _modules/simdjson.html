@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>simdjson &#8212; simdjson  documentation</title>
+    <title>simdjson &#8212; pysimdjson  documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -32,7 +32,8 @@
           <div class="body" role="main">
             
   <h1>Source code for simdjson</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span></span><span class="sd">&quot;&quot;&quot;High-level bindings for the simdjson project.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">json</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">csimdjson</span> <span class="kn">import</span> <span class="p">(</span>
@@ -40,19 +41,10 @@
         <span class="n">Parser</span><span class="p">,</span>
         <span class="n">Array</span><span class="p">,</span>
         <span class="n">Object</span><span class="p">,</span>
-        <span class="c1"># Enums</span>
-        <span class="n">error_code</span><span class="p">,</span>
         <span class="c1"># Constants</span>
         <span class="n">MAXSIZE_BYTES</span><span class="p">,</span>
         <span class="n">PADDING</span><span class="p">,</span>
-        <span class="n">DEFAULT_MAX_DEPTH</span><span class="p">,</span>
-        <span class="c1"># Exceptions</span>
-        <span class="n">SimdjsonError</span><span class="p">,</span>
-        <span class="n">CapacityError</span><span class="p">,</span>
-        <span class="n">NoSuchFieldError</span><span class="p">,</span>
-        <span class="n">IndexOutOfBoundsError</span><span class="p">,</span>
-        <span class="n">IncorrectTypeError</span><span class="p">,</span>
-        <span class="n">InvalidJSONPointerError</span>
+        <span class="n">DEFAULT_MAX_DEPTH</span>
     <span class="p">)</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Unable to import low-level simdjson bindings.&#39;</span><span class="p">)</span>
@@ -62,16 +54,9 @@
     <span class="n">Parser</span><span class="p">,</span>
     <span class="n">Array</span><span class="p">,</span>
     <span class="n">Object</span><span class="p">,</span>
-    <span class="n">error_code</span><span class="p">,</span>
     <span class="n">MAXSIZE_BYTES</span><span class="p">,</span>
     <span class="n">PADDING</span><span class="p">,</span>
-    <span class="n">DEFAULT_MAX_DEPTH</span><span class="p">,</span>
-    <span class="n">SimdjsonError</span><span class="p">,</span>
-    <span class="n">CapacityError</span><span class="p">,</span>
-    <span class="n">NoSuchFieldError</span><span class="p">,</span>
-    <span class="n">IndexOutOfBoundsError</span><span class="p">,</span>
-    <span class="n">IncorrectTypeError</span><span class="p">,</span>
-    <span class="n">InvalidJSONPointerError</span>
+    <span class="n">DEFAULT_MAX_DEPTH</span>
 <span class="p">]</span>
 
 
@@ -120,7 +105,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../index.html">simdjson</a></h1>
+<h1 class="logo"><a href="../index.html">pysimdjson</a></h1>
 
 
 
