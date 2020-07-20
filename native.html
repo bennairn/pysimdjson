@@ -54,6 +54,29 @@ a Parser are invalidated when a new document is parsed.</p>
 grow to. [default: SIMDJSON_MAXSIZE_BYTES]</p>
 </dd>
 </dl>
+<dl class="py data">
+<dt id="simdjson.Parser.implementations">
+<code class="sig-name descname">implementations</code><a class="headerlink" href="#simdjson.Parser.implementations" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of available parser implementations in the form of
+<cite>[(name, description),…]</cite>.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt id="simdjson.Parser.implementation">
+<code class="sig-name descname">implementation</code><a class="headerlink" href="#simdjson.Parser.implementation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The active parser implementation as (name, description). Can be
+any value from <a class="reference internal" href="#simdjson.Parser.implementations" title="simdjson.Parser.implementations"><code class="xref py py-attr docutils literal notranslate"><span class="pre">implementations</span></code></a>. The best implementation
+for your current platform will be picked by default.</p>
+<p>Can be set to the name of any valid implementation to globally
+change the Parser implementation.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Setting this to an implementation inappropriate for your platform
+WILL cause illegal instructions or segfaults at best. It’s up to
+you to ensure an implementation is valid for your CPU.</p>
+</div>
+</dd></dl>
+
 <dl class="py method">
 <dt id="simdjson.Parser.load">
 <code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Parser</span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">recursive</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#simdjson.Parser.load" title="Permalink to this definition">¶</a></dt>
