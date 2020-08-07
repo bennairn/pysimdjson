@@ -50,7 +50,7 @@ with no further requirements:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pysimdjson</span>
 </pre></div>
 </div>
-<p>Binary wheels are available for x86_64 on the following:</p>
+<p>Binary wheels are available for the following:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
@@ -70,21 +70,21 @@ with no further requirements:</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>OS X</p></td>
+<tr class="row-even"><td><p>OS X (x86_64)</p></td>
 <td><p>y</p></td>
 <td><p>y</p></td>
 <td><p>y</p></td>
 <td><p>y</p></td>
 <td><p>y</p></td>
 </tr>
-<tr class="row-odd"><td><p>Windows</p></td>
+<tr class="row-odd"><td><p>Windows (x86_64)</p></td>
 <td><p>x</p></td>
 <td><p>x</p></td>
 <td><p>y</p></td>
 <td><p>y</p></td>
 <td><p>x</p></td>
 </tr>
-<tr class="row-even"><td><p>Linux</p></td>
+<tr class="row-even"><td><p>Linux (x86_64)</p></td>
 <td><p>y</p></td>
 <td><p>y</p></td>
 <td><p>y</p></td>
@@ -163,6 +163,22 @@ don’t care about anything else. We can do this two ways:</p>
 </div>
 <p>Both of these approaches will be much faster than using <code class="docutils literal notranslate"><span class="pre">load/s()</span></code>, since
 they avoid loading the parts of the document we didn’t care about.</p>
+<p>Both <code class="docutils literal notranslate"><span class="pre">Object</span></code> and <code class="docutils literal notranslate"><span class="pre">Array</span></code> have a <code class="docutils literal notranslate"><span class="pre">mini</span></code> property that returns their entire
+content as a minified Python <code class="docutils literal notranslate"><span class="pre">str</span></code>. A message router for example would only
+parse the document and retrieve a single property, the destination, and forward
+the payload without ever turning it into a Python object. Here’s a (bad)
+example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">simdjson</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/store&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">store</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">simdjson</span><span class="o">.</span><span class="n">Parser</span><span class="p">()</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">redis</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">doc</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">],</span> <span class="n">doc</span><span class="o">.</span><span class="n">mini</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With this, doc could contain thousands of objects, but the only one loaded
+into a python object was <code class="docutils literal notranslate"><span class="pre">key</span></code>, and we even minified the content as we went.</p>
 </div>
 <div class="section" id="re-use-the-parser">
 <h3>Re-use the parser.<a class="headerlink" href="#re-use-the-parser" title="Permalink to this headline">¶</a></h3>
@@ -172,7 +188,7 @@ to re-use the parser.</p>
 <span class="n">parser</span> <span class="o">=</span> <span class="n">simdjson</span><span class="o">.</span><span class="n">Parser</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
-    <span class="n">doc</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;{&quot;a&quot;: &quot;b&quot;})</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;{&quot;a&quot;: &quot;b&quot;}&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This will drastically reduce the number of allocations being made, as it will
