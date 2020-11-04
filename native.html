@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Native API &#8212; pysimdjson  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -35,8 +35,8 @@
   <div class="section" id="native-api">
 <h1>Native API<a class="headerlink" href="#native-api" title="Permalink to this headline">¶</a></h1>
 <p>The native simdjson API offers significant performance improvements over the
-builtin-compatible API if only part of a document is of interest. Objects
-and arrays are returned as fake dicts (<a class="reference internal" href="#simdjson.Object" title="simdjson.Object"><code class="xref py py-class docutils literal notranslate"><span class="pre">Object</span></code></a>) and lists
+builtin-compatible API, especially if only part of a document is of interest.
+Objects and arrays are returned as fake dicts (<a class="reference internal" href="#simdjson.Object" title="simdjson.Object"><code class="xref py py-class docutils literal notranslate"><span class="pre">Object</span></code></a>) and lists
 (<a class="reference internal" href="#simdjson.Array" title="simdjson.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a>) that delay the creation of Python objects until they are
 accessed.</p>
 <dl class="py class">
@@ -115,11 +115,37 @@ python objects instead of pysimdjson proxies.</p></li>
 <dd><p>A proxy object that behaves much like a real <cite>list()</cite>.
 Python objects are not created until an element in the list
 is accessed.</p>
-<p>Complies with the <cite>collections.abc.Sequence</cite> interface, but does not inherit from it.</p>
+<p>Complies with the <cite>collections.abc.Sequence</cite> interface, but
+does not inherit from it.</p>
+<dl class="py method">
+<dt id="simdjson.Array.as_buffer">
+<code class="sig-name descname">as_buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Array</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">of_type</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#simdjson.Array.as_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Copies</strong> the contents of a <strong>homogeneous</strong> array to an
+object that can be used as a <cite>buffer</cite>. This means it can be
+used as input for <cite>numpy.frombuffer</cite>, <cite>bytearray</cite>,
+<cite>memoryview</cite>, etc. This object has a lifecycle that is
+independent of the array and the parser.</p>
+<p>When n-dimensional arrays are encountered, this method will
+recursively flatten them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>of_type</strong> – One of ‘d’ (double), ‘i’ (signed 64-bit
+integer) or ‘u’ (unsigned 64-bit integer).</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt id="simdjson.Array.as_list">
 <code class="sig-name descname">as_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Array</span></em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#simdjson.Array.as_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert this Array to a regular python list, recursively converting any objects/lists it finds.</p>
+<dd><p>Convert this Array to a regular python list, recursively
+converting any objects/lists it finds.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simdjson.Array.at_pointer">
+<code class="sig-name descname">at_pointer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Array</span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#simdjson.Array.at_pointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value associated with the given JSON pointer.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -135,7 +161,17 @@ is accessed.</p>
 <dl class="py method">
 <dt id="simdjson.Array.mini">
 <em class="property">property </em><code class="sig-name descname">mini</code><a class="headerlink" href="#simdjson.Array.mini" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the minified JSON representation of this Array as a <cite>str</cite>.</p>
+<dd><p>Returns the minified JSON representation of this Array as
+a <cite>str</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simdjson.Array.slots">
+<em class="property">property </em><code class="sig-name descname">slots</code><a class="headerlink" href="#simdjson.Array.slots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of ‘slots’ consumed by this array.
+This is not the same thing as <cite>len(array)</cite>, but the number of
+64bit elements consumed by this Array and all of its children
+on the simdjson structure tape.</p>
 </dd></dl>
 
 </dd></dl>
@@ -146,32 +182,33 @@ is accessed.</p>
 <dd><p>A proxy object that behaves much like a real <cite>dict()</cite>.
 Python objects are not created until an element in the Object
 is accessed.</p>
-<p>Complies with the <cite>collections.abc.Mapping</cite> interface, but does not inherit from it.</p>
+<p>Complies with the <cite>collections.abc.Mapping</cite> interface, but
+does not inherit from it.</p>
 <dl class="py method">
 <dt id="simdjson.Object.as_dict">
 <code class="sig-name descname">as_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Object</span></em><span class="sig-paren">)</span> &#x2192; dict<a class="headerlink" href="#simdjson.Object.as_dict" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>Convert this <cite>Object</cite> to a regular python dictionary,</dt><dd><p>recursively converting any objects or lists it finds.</p>
-</dd>
-</dl>
+<dd><p>Convert this <cite>Object</cite> to a regular python dictionary,
+recursively converting any objects or lists it finds.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="simdjson.Object.at">
-<code class="sig-name descname">at</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Object</span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#simdjson.Object.at" title="Permalink to this definition">¶</a></dt>
+<dt id="simdjson.Object.at_pointer">
+<code class="sig-name descname">at_pointer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Object</span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#simdjson.Object.at_pointer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the value associated with the given JSON pointer.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="simdjson.Object.get">
 <code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Object</span></em>, <em class="sig-param"><span class="n">key</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">default</span><span class="p">:</span> <span class="n">object</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#simdjson.Object.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the value of <cite>key</cite>, or <cite>default</cite> if the key does not exist.</p>
+<dd><p>Return the value of <cite>key</cite>, or <cite>default</cite> if the key does
+not exist.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="simdjson.Object.items">
 <code class="sig-name descname">items</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">csimdjson.Object</span></em><span class="sig-paren">)</span> &#x2192; csimdjson.KeyValueIterator<a class="headerlink" href="#simdjson.Object.items" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns an iterator over all the (key, value) pairs in this <cite>Object</cite>.</p>
+<dd><p>Returns an iterator over all the (key, value) pairs in this
+<cite>Object</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -183,7 +220,8 @@ is accessed.</p>
 <dl class="py method">
 <dt id="simdjson.Object.mini">
 <em class="property">property </em><code class="sig-name descname">mini</code><a class="headerlink" href="#simdjson.Object.mini" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the minified JSON representation of this Object as a <cite>str</cite>.</p>
+<dd><p>Returns the minified JSON representation of this Object as
+a <cite>str</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -282,7 +320,7 @@ to worry about this.</p>
       &copy;2020, Tyler Kennedy.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

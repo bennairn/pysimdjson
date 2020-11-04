@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>pysimdjson &#8212; pysimdjson  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -43,6 +43,12 @@ If SIMD instructions are unavailable a fallback parser is used, making
 pysimdjson safe to use anywhere.</p>
 <p>Bindings are currently tested on OS X, Linux, and Windows for Python version
 3.5 to 3.9.</p>
+<div class="section" id="documentation">
+<h2>📝 Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>The latest documentation can be found at <a class="reference external" href="https://pysimdjson.tkte.ch">https://pysimdjson.tkte.ch</a>.</p>
+<p>If you’ve checked out the source code (for example to review a PR), you can
+build the latest documentation by running <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">docs</span> <span class="pre">&amp;&amp;</span> <span class="pre">make</span> <span class="pre">html</span></code>.</p>
+</div>
 <div class="section" id="installation">
 <h2>🎉 Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>If binary wheels are available for your platform, you can install from pip
@@ -105,7 +111,7 @@ C++11-capable compiler to compile the sources:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="s1">&#39;pysimdjson[dev]&#39;</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">binary</span> <span class="p">:</span><span class="nb">all</span><span class="p">:</span>
 </pre></div>
 </div>
-<p>Both simddjson and pysimdjson support FreeBSD and Linux on ARM when built
+<p>Both simdjson and pysimdjson support FreeBSD and Linux on ARM when built
 from source.</p>
 </div>
 <div class="section" id="development-and-testing">
@@ -152,7 +158,7 @@ avoid all of this overhead by ignoring parts of the document you don’t want.</
 or proxies for objects and lists.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">simdjson</span>
 <span class="n">parser</span> <span class="o">=</span> <span class="n">simdjson</span><span class="o">.</span><span class="n">Parser</span><span class="p">()</span>
-<span class="n">doc</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;{&quot;res&quot;: [{&quot;name&quot;: &quot;first&quot;}, {&quot;name&quot;: &quot;second&quot;}]&#39;</span><span class="p">)</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;{&quot;res&quot;: [{&quot;name&quot;: &quot;first&quot;}, {&quot;name&quot;: &quot;second&quot;}]}&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>For our sample above, we really just want the second entry in <code class="docutils literal notranslate"><span class="pre">res</span></code>, we
@@ -223,40 +229,46 @@ each file. The second approach avoids all unnecessary object creation.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>✨ simdjson-{canada}</p></td>
-<td><p>10.61630</p></td>
-<td><p>27.12380</p></td>
-<td><p>0.00442</p></td>
-<td><p>58.42790</p></td>
+<td><p>10.67130</p></td>
+<td><p>22.89260</p></td>
+<td><p>0.00465</p></td>
+<td><p>60.30257</p></td>
 </tr>
-<tr class="row-odd"><td><p>orjson-{canada}</p></td>
-<td><p>11.97230</p></td>
-<td><p>29.95960</p></td>
-<td><p>0.00469</p></td>
-<td><p>56.21902</p></td>
+<tr class="row-odd"><td><p>yyjson-{canada}</p></td>
+<td><p>11.29230</p></td>
+<td><p>29.90640</p></td>
+<td><p>0.00568</p></td>
+<td><p>53.27890</p></td>
 </tr>
-<tr class="row-even"><td><p>ujson-{canada}</p></td>
-<td><p>19.12120</p></td>
-<td><p>60.73670</p></td>
-<td><p>0.01320</p></td>
-<td><p>26.66618</p></td>
+<tr class="row-even"><td><p>orjson-{canada}</p></td>
+<td><p>11.90260</p></td>
+<td><p>34.88260</p></td>
+<td><p>0.00507</p></td>
+<td><p>54.49605</p></td>
 </tr>
-<tr class="row-odd"><td><p>simplejson-{canada}</p></td>
-<td><p>39.64180</p></td>
-<td><p>59.80270</p></td>
-<td><p>0.00535</p></td>
-<td><p>20.51313</p></td>
+<tr class="row-odd"><td><p>ujson-{canada}</p></td>
+<td><p>18.17060</p></td>
+<td><p>48.99410</p></td>
+<td><p>0.00718</p></td>
+<td><p>36.24892</p></td>
 </tr>
-<tr class="row-even"><td><p>rapidjson-{canada}</p></td>
-<td><p>40.57460</p></td>
-<td><p>78.20690</p></td>
-<td><p>0.01444</p></td>
-<td><p>17.10311</p></td>
+<tr class="row-even"><td><p>simplejson-{canada}</p></td>
+<td><p>39.24630</p></td>
+<td><p>52.62860</p></td>
+<td><p>0.00483</p></td>
+<td><p>21.81617</p></td>
 </tr>
-<tr class="row-odd"><td><p>json-{canada}</p></td>
-<td><p>42.95370</p></td>
-<td><p>62.18130</p></td>
-<td><p>0.00470</p></td>
-<td><p>20.21549</p></td>
+<tr class="row-odd"><td><p>rapidjson-{canada}</p></td>
+<td><p>41.04930</p></td>
+<td><p>53.10800</p></td>
+<td><p>0.00445</p></td>
+<td><p>21.19078</p></td>
+</tr>
+<tr class="row-even"><td><p>json-{canada}</p></td>
+<td><p>44.68320</p></td>
+<td><p>59.44410</p></td>
+<td><p>0.00440</p></td>
+<td><p>19.71509</p></td>
 </tr>
 </tbody>
 </table>
@@ -281,40 +293,46 @@ each file. The second approach avoids all unnecessary object creation.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>✨ simdjson-{canada}</p></td>
-<td><p>3.38440</p></td>
-<td><p>7.60380</p></td>
-<td><p>0.00071</p></td>
-<td><p>255.69203</p></td>
+<td><p>3.21360</p></td>
+<td><p>6.88010</p></td>
+<td><p>0.00044</p></td>
+<td><p>285.83978</p></td>
 </tr>
-<tr class="row-odd"><td><p>ujson-{canada}</p></td>
-<td><p>11.10420</p></td>
-<td><p>34.35320</p></td>
-<td><p>0.00742</p></td>
-<td><p>49.72907</p></td>
+<tr class="row-odd"><td><p>yyjson-{canada}</p></td>
+<td><p>10.62770</p></td>
+<td><p>46.10050</p></td>
+<td><p>0.01000</p></td>
+<td><p>43.29310</p></td>
 </tr>
 <tr class="row-even"><td><p>orjson-{canada}</p></td>
-<td><p>12.92510</p></td>
-<td><p>45.33800</p></td>
-<td><p>0.00745</p></td>
-<td><p>41.44936</p></td>
+<td><p>12.54010</p></td>
+<td><p>39.16080</p></td>
+<td><p>0.00779</p></td>
+<td><p>44.28928</p></td>
 </tr>
-<tr class="row-odd"><td><p>simplejson-{canada}</p></td>
-<td><p>38.92410</p></td>
-<td><p>64.06250</p></td>
-<td><p>0.00856</p></td>
-<td><p>19.70330</p></td>
+<tr class="row-odd"><td><p>ujson-{canada}</p></td>
+<td><p>17.93980</p></td>
+<td><p>35.44960</p></td>
+<td><p>0.00697</p></td>
+<td><p>36.78481</p></td>
 </tr>
-<tr class="row-even"><td><p>rapidjson-{canada}</p></td>
-<td><p>41.22570</p></td>
-<td><p>66.68340</p></td>
-<td><p>0.00756</p></td>
-<td><p>19.22791</p></td>
+<tr class="row-even"><td><p>simplejson-{canada}</p></td>
+<td><p>38.58160</p></td>
+<td><p>54.33290</p></td>
+<td><p>0.00699</p></td>
+<td><p>21.37382</p></td>
 </tr>
-<tr class="row-odd"><td><p>json-{canada}</p></td>
-<td><p>43.08250</p></td>
-<td><p>64.75990</p></td>
-<td><p>0.00661</p></td>
-<td><p>18.15876</p></td>
+<tr class="row-odd"><td><p>rapidjson-{canada}</p></td>
+<td><p>40.69030</p></td>
+<td><p>58.23460</p></td>
+<td><p>0.00700</p></td>
+<td><p>20.30349</p></td>
+</tr>
+<tr class="row-even"><td><p>json-{canada}</p></td>
+<td><p>43.88300</p></td>
+<td><p>65.04480</p></td>
+<td><p>0.00722</p></td>
+<td><p>18.55929</p></td>
 </tr>
 </tbody>
 </table>
@@ -339,40 +357,46 @@ each file. The second approach avoids all unnecessary object creation.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>orjson-{twitter}</p></td>
-<td><p>2.29380</p></td>
-<td><p>8.67020</p></td>
-<td><p>0.00094</p></td>
-<td><p>372.10773</p></td>
+<td><p>2.36070</p></td>
+<td><p>14.03050</p></td>
+<td><p>0.00123</p></td>
+<td><p>346.94307</p></td>
 </tr>
 <tr class="row-odd"><td><p>✨ simdjson-{twitter}</p></td>
-<td><p>2.49010</p></td>
-<td><p>22.30540</p></td>
-<td><p>0.00198</p></td>
-<td><p>281.95565</p></td>
+<td><p>2.41350</p></td>
+<td><p>12.01550</p></td>
+<td><p>0.00117</p></td>
+<td><p>359.49272</p></td>
 </tr>
-<tr class="row-even"><td><p>ujson-{twitter}</p></td>
-<td><p>2.74350</p></td>
-<td><p>12.06470</p></td>
-<td><p>0.00105</p></td>
-<td><p>317.20009</p></td>
+<tr class="row-even"><td><p>yyjson-{twitter}</p></td>
+<td><p>2.48130</p></td>
+<td><p>12.03680</p></td>
+<td><p>0.00112</p></td>
+<td><p>353.03313</p></td>
 </tr>
-<tr class="row-odd"><td><p>simplejson-{twitter}</p></td>
-<td><p>3.35320</p></td>
-<td><p>19.56840</p></td>
-<td><p>0.00202</p></td>
-<td><p>217.32882</p></td>
+<tr class="row-odd"><td><p>ujson-{twitter}</p></td>
+<td><p>2.62890</p></td>
+<td><p>11.39370</p></td>
+<td><p>0.00090</p></td>
+<td><p>346.87994</p></td>
 </tr>
-<tr class="row-even"><td><p>rapidjson-{twitter}</p></td>
-<td><p>4.32850</p></td>
-<td><p>13.21370</p></td>
-<td><p>0.00119</p></td>
-<td><p>194.83892</p></td>
+<tr class="row-even"><td><p>simplejson-{twitter}</p></td>
+<td><p>3.34600</p></td>
+<td><p>11.08840</p></td>
+<td><p>0.00098</p></td>
+<td><p>270.58797</p></td>
 </tr>
 <tr class="row-odd"><td><p>json-{twitter}</p></td>
-<td><p>5.27190</p></td>
-<td><p>11.25140</p></td>
-<td><p>0.00117</p></td>
-<td><p>167.84380</p></td>
+<td><p>3.35270</p></td>
+<td><p>11.82610</p></td>
+<td><p>0.00116</p></td>
+<td><p>260.01943</p></td>
+</tr>
+<tr class="row-even"><td><p>rapidjson-{twitter}</p></td>
+<td><p>4.29320</p></td>
+<td><p>13.81980</p></td>
+<td><p>0.00128</p></td>
+<td><p>197.91107</p></td>
 </tr>
 </tbody>
 </table>
@@ -397,40 +421,46 @@ each file. The second approach avoids all unnecessary object creation.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>✨ simdjson-{twitter}</p></td>
-<td><p>0.35740</p></td>
-<td><p>2.01060</p></td>
-<td><p>0.00009</p></td>
-<td><p>2423.86485</p></td>
+<td><p>0.33840</p></td>
+<td><p>0.67200</p></td>
+<td><p>0.00002</p></td>
+<td><p>2800.32496</p></td>
 </tr>
 <tr class="row-odd"><td><p>orjson-{twitter}</p></td>
-<td><p>2.29750</p></td>
-<td><p>11.01000</p></td>
-<td><p>0.00105</p></td>
-<td><p>366.48762</p></td>
+<td><p>2.38460</p></td>
+<td><p>13.53120</p></td>
+<td><p>0.00131</p></td>
+<td><p>352.70788</p></td>
 </tr>
-<tr class="row-even"><td><p>ujson-{twitter}</p></td>
-<td><p>2.76260</p></td>
-<td><p>14.13210</p></td>
-<td><p>0.00143</p></td>
-<td><p>285.69895</p></td>
+<tr class="row-even"><td><p>yyjson-{twitter}</p></td>
+<td><p>2.48180</p></td>
+<td><p>13.67470</p></td>
+<td><p>0.00156</p></td>
+<td><p>320.56731</p></td>
+</tr>
+<tr class="row-odd"><td><p>ujson-{twitter}</p></td>
+<td><p>2.65230</p></td>
+<td><p>11.65150</p></td>
+<td><p>0.00125</p></td>
+<td><p>331.69430</p></td>
+</tr>
+<tr class="row-even"><td><p>json-{twitter}</p></td>
+<td><p>3.34910</p></td>
+<td><p>12.44890</p></td>
+<td><p>0.00116</p></td>
+<td><p>263.25854</p></td>
 </tr>
 <tr class="row-odd"><td><p>simplejson-{twitter}</p></td>
-<td><p>3.35340</p></td>
-<td><p>13.34750</p></td>
-<td><p>0.00118</p></td>
-<td><p>257.05624</p></td>
+<td><p>3.35760</p></td>
+<td><p>15.61900</p></td>
+<td><p>0.00137</p></td>
+<td><p>262.36758</p></td>
 </tr>
 <tr class="row-even"><td><p>rapidjson-{twitter}</p></td>
-<td><p>4.31330</p></td>
-<td><p>12.43220</p></td>
-<td><p>0.00141</p></td>
-<td><p>192.75979</p></td>
-</tr>
-<tr class="row-odd"><td><p>json-{twitter}</p></td>
-<td><p>5.23560</p></td>
-<td><p>13.85480</p></td>
-<td><p>0.00126</p></td>
-<td><p>168.04882</p></td>
+<td><p>4.31870</p></td>
+<td><p>12.77490</p></td>
+<td><p>0.00119</p></td>
+<td><p>201.86510</p></td>
 </tr>
 </tbody>
 </table>
@@ -455,40 +485,46 @@ each file. The second approach avoids all unnecessary object creation.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>orjson-{github_events}</p></td>
-<td><p>0.17850</p></td>
-<td><p>0.62230</p></td>
-<td><p>0.00002</p></td>
-<td><p>5331.74983</p></td>
+<td><p>0.18080</p></td>
+<td><p>0.67020</p></td>
+<td><p>0.00004</p></td>
+<td><p>5041.29485</p></td>
 </tr>
 <tr class="row-odd"><td><p>✨ simdjson-{github_events}</p></td>
-<td><p>0.19760</p></td>
-<td><p>2.36700</p></td>
-<td><p>0.00009</p></td>
-<td><p>3905.95971</p></td>
-</tr>
-<tr class="row-even"><td><p>ujson-{github_events}</p></td>
-<td><p>0.25860</p></td>
-<td><p>0.67530</p></td>
+<td><p>0.19470</p></td>
+<td><p>0.61450</p></td>
 <td><p>0.00003</p></td>
-<td><p>3642.89767</p></td>
+<td><p>4725.63489</p></td>
 </tr>
-<tr class="row-odd"><td><p>json-{github_events}</p></td>
-<td><p>0.28910</p></td>
-<td><p>1.09600</p></td>
+<tr class="row-even"><td><p>yyjson-{github_events}</p></td>
+<td><p>0.19710</p></td>
+<td><p>0.53970</p></td>
+<td><p>0.00004</p></td>
+<td><p>4584.50870</p></td>
+</tr>
+<tr class="row-odd"><td><p>ujson-{github_events}</p></td>
+<td><p>0.23760</p></td>
+<td><p>1.33490</p></td>
+<td><p>0.00004</p></td>
+<td><p>3904.08715</p></td>
+</tr>
+<tr class="row-even"><td><p>json-{github_events}</p></td>
+<td><p>0.29030</p></td>
+<td><p>1.32040</p></td>
 <td><p>0.00009</p></td>
-<td><p>2924.08415</p></td>
+<td><p>3034.22530</p></td>
 </tr>
-<tr class="row-even"><td><p>simplejson-{github_events}</p></td>
-<td><p>0.30620</p></td>
-<td><p>1.29520</p></td>
+<tr class="row-odd"><td><p>simplejson-{github_events}</p></td>
+<td><p>0.30210</p></td>
+<td><p>0.82260</p></td>
 <td><p>0.00005</p></td>
-<td><p>3007.32539</p></td>
+<td><p>3067.99997</p></td>
 </tr>
-<tr class="row-odd"><td><p>rapidjson-{github_events}</p></td>
-<td><p>0.33290</p></td>
-<td><p>1.15310</p></td>
-<td><p>0.00006</p></td>
-<td><p>2654.55940</p></td>
+<tr class="row-even"><td><p>rapidjson-{github_events}</p></td>
+<td><p>0.33010</p></td>
+<td><p>0.92400</p></td>
+<td><p>0.00005</p></td>
+<td><p>2793.93274</p></td>
 </tr>
 </tbody>
 </table>
@@ -513,40 +549,46 @@ each file. The second approach avoids all unnecessary object creation.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>✨ simdjson-{github_events}</p></td>
-<td><p>0.03950</p></td>
-<td><p>3.31210</p></td>
-<td><p>0.00005</p></td>
-<td><p>15973.82108</p></td>
+<td><p>0.03630</p></td>
+<td><p>0.66110</p></td>
+<td><p>0.00001</p></td>
+<td><p>25259.19598</p></td>
 </tr>
 <tr class="row-odd"><td><p>orjson-{github_events}</p></td>
-<td><p>0.18030</p></td>
-<td><p>0.65220</p></td>
-<td><p>0.00005</p></td>
-<td><p>4911.43253</p></td>
+<td><p>0.18210</p></td>
+<td><p>0.71230</p></td>
+<td><p>0.00003</p></td>
+<td><p>5073.48086</p></td>
 </tr>
-<tr class="row-even"><td><p>ujson-{github_events}</p></td>
-<td><p>0.26070</p></td>
-<td><p>0.96760</p></td>
-<td><p>0.00005</p></td>
-<td><p>3549.92113</p></td>
+<tr class="row-even"><td><p>yyjson-{github_events}</p></td>
+<td><p>0.20030</p></td>
+<td><p>0.61270</p></td>
+<td><p>0.00003</p></td>
+<td><p>4589.71299</p></td>
 </tr>
-<tr class="row-odd"><td><p>json-{github_events}</p></td>
-<td><p>0.29040</p></td>
-<td><p>1.54090</p></td>
+<tr class="row-odd"><td><p>ujson-{github_events}</p></td>
+<td><p>0.24260</p></td>
+<td><p>1.05100</p></td>
 <td><p>0.00007</p></td>
-<td><p>3047.37921</p></td>
+<td><p>3644.08240</p></td>
 </tr>
-<tr class="row-even"><td><p>simplejson-{github_events}</p></td>
-<td><p>0.30920</p></td>
-<td><p>0.98670</p></td>
-<td><p>0.00008</p></td>
-<td><p>2953.84031</p></td>
+<tr class="row-even"><td><p>json-{github_events}</p></td>
+<td><p>0.29310</p></td>
+<td><p>2.38770</p></td>
+<td><p>0.00011</p></td>
+<td><p>2967.79019</p></td>
 </tr>
-<tr class="row-odd"><td><p>rapidjson-{github_events}</p></td>
-<td><p>0.33390</p></td>
-<td><p>1.56730</p></td>
-<td><p>0.00010</p></td>
-<td><p>2461.45389</p></td>
+<tr class="row-odd"><td><p>simplejson-{github_events}</p></td>
+<td><p>0.30580</p></td>
+<td><p>1.39670</p></td>
+<td><p>0.00007</p></td>
+<td><p>2931.01646</p></td>
+</tr>
+<tr class="row-even"><td><p>rapidjson-{github_events}</p></td>
+<td><p>0.33340</p></td>
+<td><p>0.80440</p></td>
+<td><p>0.00004</p></td>
+<td><p>2795.27887</p></td>
 </tr>
 </tbody>
 </table>
@@ -571,40 +613,46 @@ each file. The second approach avoids all unnecessary object creation.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>orjson-{citm_catalog}</p></td>
-<td><p>5.24950</p></td>
-<td><p>18.22640</p></td>
-<td><p>0.00323</p></td>
-<td><p>129.49044</p></td>
+<td><p>5.40140</p></td>
+<td><p>17.76900</p></td>
+<td><p>0.00314</p></td>
+<td><p>130.33847</p></td>
 </tr>
-<tr class="row-odd"><td><p>✨ simdjson-{citm_catalog}</p></td>
-<td><p>6.05650</p></td>
-<td><p>29.15550</p></td>
-<td><p>0.00584</p></td>
-<td><p>70.17580</p></td>
+<tr class="row-odd"><td><p>yyjson-{citm_catalog}</p></td>
+<td><p>5.77340</p></td>
+<td><p>23.09490</p></td>
+<td><p>0.00421</p></td>
+<td><p>113.78942</p></td>
 </tr>
-<tr class="row-even"><td><p>ujson-{citm_catalog}</p></td>
-<td><p>6.24130</p></td>
-<td><p>18.69410</p></td>
-<td><p>0.00373</p></td>
-<td><p>109.60956</p></td>
+<tr class="row-even"><td><p>✨ simdjson-{citm_catalog}</p></td>
+<td><p>6.00620</p></td>
+<td><p>26.87570</p></td>
+<td><p>0.00444</p></td>
+<td><p>104.41073</p></td>
 </tr>
-<tr class="row-odd"><td><p>json-{citm_catalog}</p></td>
-<td><p>9.10930</p></td>
-<td><p>26.54630</p></td>
-<td><p>0.00414</p></td>
-<td><p>76.55235</p></td>
+<tr class="row-odd"><td><p>ujson-{citm_catalog}</p></td>
+<td><p>6.34300</p></td>
+<td><p>25.06400</p></td>
+<td><p>0.00473</p></td>
+<td><p>96.01414</p></td>
 </tr>
 <tr class="row-even"><td><p>simplejson-{citm_catalog}</p></td>
-<td><p>13.69630</p></td>
-<td><p>28.63450</p></td>
-<td><p>0.00401</p></td>
-<td><p>57.28718</p></td>
+<td><p>9.54910</p></td>
+<td><p>23.96350</p></td>
+<td><p>0.00392</p></td>
+<td><p>78.99315</p></td>
 </tr>
-<tr class="row-odd"><td><p>rapidjson-{citm_catalog}</p></td>
-<td><p>21.78300</p></td>
-<td><p>65.30240</p></td>
-<td><p>0.01055</p></td>
-<td><p>28.63350</p></td>
+<tr class="row-odd"><td><p>json-{citm_catalog}</p></td>
+<td><p>10.21250</p></td>
+<td><p>23.52610</p></td>
+<td><p>0.00329</p></td>
+<td><p>78.72180</p></td>
+</tr>
+<tr class="row-even"><td><p>rapidjson-{citm_catalog}</p></td>
+<td><p>10.81700</p></td>
+<td><p>21.85400</p></td>
+<td><p>0.00343</p></td>
+<td><p>73.94939</p></td>
 </tr>
 </tbody>
 </table>
@@ -629,40 +677,46 @@ each file. The second approach avoids all unnecessary object creation.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>✨ simdjson-{citm_catalog}</p></td>
-<td><p>0.87070</p></td>
-<td><p>2.86480</p></td>
-<td><p>0.00019</p></td>
-<td><p>1056.22226</p></td>
+<td><p>0.81040</p></td>
+<td><p>2.11090</p></td>
+<td><p>0.00015</p></td>
+<td><p>1088.17698</p></td>
 </tr>
 <tr class="row-odd"><td><p>orjson-{citm_catalog}</p></td>
-<td><p>5.40520</p></td>
-<td><p>26.24650</p></td>
-<td><p>0.00551</p></td>
-<td><p>102.43563</p></td>
+<td><p>5.37260</p></td>
+<td><p>18.37890</p></td>
+<td><p>0.00451</p></td>
+<td><p>120.86345</p></td>
 </tr>
-<tr class="row-even"><td><p>ujson-{citm_catalog}</p></td>
-<td><p>6.38280</p></td>
-<td><p>26.49210</p></td>
-<td><p>0.00562</p></td>
-<td><p>96.65066</p></td>
+<tr class="row-even"><td><p>yyjson-{citm_catalog}</p></td>
+<td><p>5.61430</p></td>
+<td><p>23.18500</p></td>
+<td><p>0.00548</p></td>
+<td><p>110.29924</p></td>
 </tr>
-<tr class="row-odd"><td><p>json-{citm_catalog}</p></td>
-<td><p>9.16770</p></td>
-<td><p>29.45910</p></td>
-<td><p>0.00498</p></td>
-<td><p>76.90314</p></td>
+<tr class="row-odd"><td><p>ujson-{citm_catalog}</p></td>
+<td><p>6.25850</p></td>
+<td><p>30.79090</p></td>
+<td><p>0.00604</p></td>
+<td><p>95.50805</p></td>
 </tr>
 <tr class="row-even"><td><p>simplejson-{citm_catalog}</p></td>
-<td><p>13.66750</p></td>
-<td><p>30.54480</p></td>
-<td><p>0.00471</p></td>
-<td><p>57.54416</p></td>
+<td><p>9.36560</p></td>
+<td><p>24.44860</p></td>
+<td><p>0.00510</p></td>
+<td><p>77.50571</p></td>
 </tr>
-<tr class="row-odd"><td><p>rapidjson-{citm_catalog}</p></td>
-<td><p>19.16620</p></td>
-<td><p>49.23040</p></td>
-<td><p>0.00714</p></td>
-<td><p>36.04769</p></td>
+<tr class="row-odd"><td><p>json-{citm_catalog}</p></td>
+<td><p>10.07650</p></td>
+<td><p>25.29490</p></td>
+<td><p>0.00450</p></td>
+<td><p>76.18267</p></td>
+</tr>
+<tr class="row-even"><td><p>rapidjson-{citm_catalog}</p></td>
+<td><p>10.69120</p></td>
+<td><p>27.84880</p></td>
+<td><p>0.00493</p></td>
+<td><p>70.98005</p></td>
 </tr>
 </tbody>
 </table>
@@ -686,41 +740,47 @@ each file. The second approach avoids all unnecessary object creation.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>✨ simdjson-{mesh}</p></td>
-<td><p>2.60850</p></td>
-<td><p>17.85500</p></td>
-<td><p>0.00189</p></td>
-<td><p>276.39681</p></td>
+<tr class="row-even"><td><p>yyjson-{mesh}</p></td>
+<td><p>2.33710</p></td>
+<td><p>13.01130</p></td>
+<td><p>0.00171</p></td>
+<td><p>331.50569</p></td>
 </tr>
-<tr class="row-odd"><td><p>ujson-{mesh}</p></td>
-<td><p>2.80000</p></td>
-<td><p>11.36520</p></td>
-<td><p>0.00148</p></td>
-<td><p>297.40696</p></td>
+<tr class="row-odd"><td><p>✨ simdjson-{mesh}</p></td>
+<td><p>2.52960</p></td>
+<td><p>13.19230</p></td>
+<td><p>0.00159</p></td>
+<td><p>311.37935</p></td>
 </tr>
 <tr class="row-even"><td><p>orjson-{mesh}</p></td>
-<td><p>2.87780</p></td>
-<td><p>14.34770</p></td>
-<td><p>0.00156</p></td>
-<td><p>272.06333</p></td>
+<td><p>2.88770</p></td>
+<td><p>12.13010</p></td>
+<td><p>0.00152</p></td>
+<td><p>287.31080</p></td>
 </tr>
-<tr class="row-odd"><td><p>json-{mesh}</p></td>
-<td><p>5.69520</p></td>
-<td><p>22.03140</p></td>
-<td><p>0.00282</p></td>
-<td><p>132.44125</p></td>
+<tr class="row-odd"><td><p>ujson-{mesh}</p></td>
+<td><p>3.64020</p></td>
+<td><p>18.23620</p></td>
+<td><p>0.00227</p></td>
+<td><p>193.35645</p></td>
 </tr>
-<tr class="row-even"><td><p>rapidjson-{mesh}</p></td>
-<td><p>7.28240</p></td>
-<td><p>24.61470</p></td>
-<td><p>0.00249</p></td>
-<td><p>113.59051</p></td>
+<tr class="row-even"><td><p>json-{mesh}</p></td>
+<td><p>5.97130</p></td>
+<td><p>13.58290</p></td>
+<td><p>0.00136</p></td>
+<td><p>150.01621</p></td>
 </tr>
-<tr class="row-odd"><td><p>simplejson-{mesh}</p></td>
-<td><p>8.37720</p></td>
-<td><p>18.80480</p></td>
-<td><p>0.00201</p></td>
-<td><p>104.81092</p></td>
+<tr class="row-odd"><td><p>rapidjson-{mesh}</p></td>
+<td><p>7.54270</p></td>
+<td><p>16.14480</p></td>
+<td><p>0.00155</p></td>
+<td><p>119.37806</p></td>
+</tr>
+<tr class="row-even"><td><p>simplejson-{mesh}</p></td>
+<td><p>8.64370</p></td>
+<td><p>16.35320</p></td>
+<td><p>0.00136</p></td>
+<td><p>106.25888</p></td>
 </tr>
 </tbody>
 </table>
@@ -745,40 +805,174 @@ each file. The second approach avoids all unnecessary object creation.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>✨ simdjson-{mesh}</p></td>
-<td><p>1.01600</p></td>
-<td><p>12.12980</p></td>
-<td><p>0.00067</p></td>
-<td><p>619.16472</p></td>
+<td><p>1.02020</p></td>
+<td><p>2.74930</p></td>
+<td><p>0.00013</p></td>
+<td><p>919.93044</p></td>
 </tr>
-<tr class="row-odd"><td><p>ujson-{mesh}</p></td>
-<td><p>2.75500</p></td>
-<td><p>14.19920</p></td>
-<td><p>0.00166</p></td>
-<td><p>309.06497</p></td>
+<tr class="row-odd"><td><p>yyjson-{mesh}</p></td>
+<td><p>2.30970</p></td>
+<td><p>13.06730</p></td>
+<td><p>0.00182</p></td>
+<td><p>347.76076</p></td>
 </tr>
 <tr class="row-even"><td><p>orjson-{mesh}</p></td>
-<td><p>2.84420</p></td>
-<td><p>24.41680</p></td>
-<td><p>0.00248</p></td>
-<td><p>245.50994</p></td>
+<td><p>2.85260</p></td>
+<td><p>12.41860</p></td>
+<td><p>0.00156</p></td>
+<td><p>290.19432</p></td>
 </tr>
-<tr class="row-odd"><td><p>json-{mesh}</p></td>
-<td><p>5.63860</p></td>
-<td><p>14.53620</p></td>
+<tr class="row-odd"><td><p>ujson-{mesh}</p></td>
+<td><p>3.59400</p></td>
+<td><p>16.68610</p></td>
+<td><p>0.00227</p></td>
+<td><p>201.03704</p></td>
+</tr>
+<tr class="row-even"><td><p>json-{mesh}</p></td>
+<td><p>5.96300</p></td>
+<td><p>19.18900</p></td>
+<td><p>0.00185</p></td>
+<td><p>146.04645</p></td>
+</tr>
+<tr class="row-odd"><td><p>rapidjson-{mesh}</p></td>
+<td><p>7.43860</p></td>
+<td><p>16.32260</p></td>
+<td><p>0.00164</p></td>
+<td><p>121.84979</p></td>
+</tr>
+<tr class="row-even"><td><p>simplejson-{mesh}</p></td>
+<td><p>8.62160</p></td>
+<td><p>21.89280</p></td>
+<td><p>0.00221</p></td>
+<td><p>101.30905</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="jsonexamples-gsoc-2018-json-deserialization">
+<h3>jsonexamples/gsoc-2018.json deserialization<a class="headerlink" href="#jsonexamples-gsoc-2018-json-deserialization" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Min (μs)</p></th>
+<th class="head"><p>Max (μs)</p></th>
+<th class="head"><p>StdDev</p></th>
+<th class="head"><p>Ops</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>✨ simdjson-{gsoc-2018}</p></td>
+<td><p>5.52590</p></td>
+<td><p>16.27430</p></td>
+<td><p>0.00178</p></td>
+<td><p>145.59797</p></td>
+</tr>
+<tr class="row-odd"><td><p>yyjson-{gsoc-2018}</p></td>
+<td><p>5.62040</p></td>
+<td><p>16.46250</p></td>
+<td><p>0.00168</p></td>
+<td><p>155.97459</p></td>
+</tr>
+<tr class="row-even"><td><p>orjson-{gsoc-2018}</p></td>
+<td><p>5.78420</p></td>
+<td><p>13.87300</p></td>
+<td><p>0.00140</p></td>
+<td><p>148.84293</p></td>
+</tr>
+<tr class="row-odd"><td><p>simplejson-{gsoc-2018}</p></td>
+<td><p>7.76200</p></td>
+<td><p>15.26480</p></td>
+<td><p>0.00142</p></td>
+<td><p>114.98827</p></td>
+</tr>
+<tr class="row-even"><td><p>ujson-{gsoc-2018}</p></td>
+<td><p>7.96570</p></td>
+<td><p>21.53840</p></td>
+<td><p>0.00188</p></td>
+<td><p>110.29162</p></td>
+</tr>
+<tr class="row-odd"><td><p>json-{gsoc-2018}</p></td>
+<td><p>8.63300</p></td>
+<td><p>19.26320</p></td>
+<td><p>0.00172</p></td>
+<td><p>102.78744</p></td>
+</tr>
+<tr class="row-even"><td><p>rapidjson-{gsoc-2018}</p></td>
+<td><p>10.55570</p></td>
+<td><p>19.20210</p></td>
+<td><p>0.00159</p></td>
+<td><p>85.84087</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="jsonexamples-gsoc-2018-json-deepest-key">
+<h3>jsonexamples/gsoc-2018.json deepest key<a class="headerlink" href="#jsonexamples-gsoc-2018-json-deepest-key" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Min (μs)</p></th>
+<th class="head"><p>Max (μs)</p></th>
+<th class="head"><p>StdDev</p></th>
+<th class="head"><p>Ops</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>✨ simdjson-{gsoc-2018}</p></td>
+<td><p>1.56020</p></td>
+<td><p>4.20200</p></td>
+<td><p>0.00024</p></td>
+<td><p>570.15046</p></td>
+</tr>
+<tr class="row-odd"><td><p>yyjson-{gsoc-2018}</p></td>
+<td><p>5.49930</p></td>
+<td><p>14.89760</p></td>
+<td><p>0.00158</p></td>
+<td><p>161.14242</p></td>
+</tr>
+<tr class="row-even"><td><p>orjson-{gsoc-2018}</p></td>
+<td><p>5.72650</p></td>
+<td><p>15.88270</p></td>
 <td><p>0.00160</p></td>
-<td><p>154.31889</p></td>
+<td><p>153.18169</p></td>
 </tr>
-<tr class="row-even"><td><p>rapidjson-{mesh}</p></td>
-<td><p>7.11940</p></td>
-<td><p>18.68600</p></td>
-<td><p>0.00208</p></td>
-<td><p>117.20282</p></td>
+<tr class="row-odd"><td><p>simplejson-{gsoc-2018}</p></td>
+<td><p>7.70780</p></td>
+<td><p>18.78120</p></td>
+<td><p>0.00169</p></td>
+<td><p>116.90299</p></td>
 </tr>
-<tr class="row-odd"><td><p>simplejson-{mesh}</p></td>
-<td><p>8.27930</p></td>
-<td><p>19.76000</p></td>
-<td><p>0.00207</p></td>
-<td><p>106.66946</p></td>
+<tr class="row-even"><td><p>ujson-{gsoc-2018}</p></td>
+<td><p>7.91720</p></td>
+<td><p>21.35300</p></td>
+<td><p>0.00227</p></td>
+<td><p>103.06755</p></td>
+</tr>
+<tr class="row-odd"><td><p>json-{gsoc-2018}</p></td>
+<td><p>8.65190</p></td>
+<td><p>19.99580</p></td>
+<td><p>0.00188</p></td>
+<td><p>103.86934</p></td>
+</tr>
+<tr class="row-even"><td><p>rapidjson-{gsoc-2018}</p></td>
+<td><p>10.52410</p></td>
+<td><p>20.98870</p></td>
+<td><p>0.00158</p></td>
+<td><p>87.78973</p></td>
 </tr>
 </tbody>
 </table>
@@ -851,7 +1045,7 @@ each file. The second approach avoids all unnecessary object creation.</p>
       &copy;2020, Tyler Kennedy.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
